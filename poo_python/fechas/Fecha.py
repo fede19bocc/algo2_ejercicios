@@ -8,8 +8,8 @@ class Fecha:
         return f'{self.dia}/{self.mes}/{self.año}'
 
     def __gt__(self, otro):
-        cadena_self = str(self.año) + str(self.mes) + str(self.dia)
-        cadena_otro = str(otro.año) + str(otro.mes) + str(otro.dia)
+        cadena_self = f"{self.año:04}{self.mes:02}{self.dia:02}"
+        cadena_otro = f"{otro.año:04}{otro.mes:02}{otro.dia:02}"
         return int(cadena_self) > int(cadena_otro)
     
 #%% test
