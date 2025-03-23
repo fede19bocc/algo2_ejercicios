@@ -107,10 +107,24 @@ def mayor(x: Nat, y: Nat) -> bool:
         return mayor(pred(x), pred(y))
 
 def menor_igual(x: Nat, y: Nat) -> bool:
-    pass
+    if es_cero(x) and es_cero(y): # 0, 0
+        return True
+    elif es_cero(x): # 0, 1
+        return not es_cero(y)
+    elif es_cero(y): # 1, 0
+        return es_cero(x)
+    else:
+        return menor_igual(pred(x), pred(y))
 
 def mayor_igual(x: Nat, y: Nat) -> bool:
-    pass
+    if es_cero(x) and es_cero(y): # 0, 0
+        return True
+    elif es_cero(x): # 0, 1
+        return es_cero(y)
+    elif es_cero(y): # 1, 0
+        return not es_cero(x)
+    else:
+        return mayor_igual(pred(x), pred(y))
 
 def resta(x: Nat, y: Nat) -> Nat:
     if es_cero(y):
@@ -127,10 +141,20 @@ def producto(x: Nat, y: Nat) -> Nat:
         return x + producto(x, pred(y))
     
 def division(x: Nat, y: Nat) -> Nat:
-    pass
+    if es_cero(y):
+        raise ValueError(f'No se puede dividir por {nat_to_int(y)}')
+    elif  menor(x, y):
+        return cero()
+    else:
+        return suma(suc(cero()), division(resta(x, y), y))
 
 def potencia(base: Nat, exponente: Nat) -> Nat:
-    pass
+    if es_cero(exponente):
+        return suc(cero())
+    elif igual(exponente, suc(cero())):
+        return base
+    else:
+        return producto(base, potencia(base, pred(exponente)))
 
 if __name__ == '__main__':
     n1: Nat = cero()                # n1 = 0
@@ -164,4 +188,10 @@ if __name__ == '__main__':
     print(f'2*7: {n2 * n4}')  # 14
     print(f'0*7: {cero() * n4}')  # 14
     
-    print(f'division(n4, n2): {division(n4, n2)}')  # 3
+    print(f'n2 mayor igual n4: {mayor_igual(n2, n4)}') # n4=7 , n2=2
+    print(f'n2 menor igual n2: {menor_igual(n2, n2)}')
+    print(f'n4: {n4}, n2: {n2}')
+    print(f'division(n4, n2): {division(n4, n2)}')  # 2
+    n5: Nat = suc(n2)
+    print(n5)
+    print(f'potencia(n4, n5): {potencia(n2, n4)}')  # 2
