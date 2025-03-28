@@ -59,7 +59,14 @@ class Lista(Generic[T]):
                 _eliminar_interna(self._head.sig, self, valor)
 
     def ultimo(self) -> T:
-        pass
+        def encontra_ultimo(self):
+            if self._head is None:
+                return ""
+            elif self._head.sig.es_vacia():
+                return self._head.dato
+            else:
+                return encontra_ultimo(self.tail())
+        return encontra_ultimo(self)
 
     def concat(self, ys: ListaGenerica) -> ListaGenerica:
         pass
@@ -73,6 +80,14 @@ class Lista(Generic[T]):
     def existe(self, valor: T) -> bool:
         pass
 
+    def __str__(self):
+        def cadena(self):
+            if self.es_vacia():
+                return ""
+            else:
+                return str(self.head()) + ", " + cadena(self.tail())
+        return f"[ {cadena(self)} ]" #agrega el vacio, ver
+    
     def __repr__(self):
         pass
         
@@ -95,11 +110,13 @@ if __name__ == '__main__':
     zs: Lista[int] = ys.copy()
     zs.eliminar(8)
     zs.eliminar(9)
+    ws: Lista[int] = Lista()
     
     print(f'xs: {xs}')						# [20, 10, 4]
     print(f'ys: {ys}')						# [8, 9, 4]
     print(f'xs es vacia? {xs.es_vacia()}')	# False
     print(f'ultimo(xs): {xs.ultimo()}')		# 4
+    print(f'ultimo(ws): {ws.ultimo()}')
     print(f'len(xs): {len(ys)}')			# 3, ver __len__
     print(f'xs[1]: {xs[1]}')				# 10, ver __getitem__
 
