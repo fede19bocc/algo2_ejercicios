@@ -115,34 +115,19 @@ class ArbolBinario(Generic[T]):
             return  self.si().inorder() +  self.sd().inorder() + [self.dato()]
 
     def bfs(self) -> list[T]:
-        # def interna(arbol, rama1, rama2) -> list[T]:
-        #     if arbol.es_vacio():
-        #         return []
-        #     else:
-        #         return  [arbol.dato()] + interna(rama1, rama1.si(), rama1.sd()) + interna(rama2, rama2.si(), rama2.sd())
-        # return interna(self, self.si(), self.sd())
-      
         if self.es_vacio():
-            return []
-        else:
-            return  [self.dato()] + [self.si()] + [self.sd()]
-    
-    # def nivel(self, x: T) -> int:
-    #     if self.es_vacio():
-    #         return -1
-    #     elif self.dato == x:
-    #         return 0
-    #     def interna(sub1 = self.si(), sub2 = self.sd(), nivel = 1):
-    #         if sub1.dato() == x or sub2.dato() == x:
-    #             return nivel
-    #         elif nivel > self.altura():
-    #             return nivel
-    #         elif not sub1.es_vacio():
-    #             nivel += 1
-    #             return interna(sub1.si(), sub1.sd(), nivel)
-    #         else:
-    #             nivel += 1
-    #             return interna(sub2.si(), sub2.sd(), nivel)
+                return []
+        orden = [self.dato()]
+        actual =[self.si(), self.sd()]
+        while actual:
+            nodo = actual.pop(0)
+            orden.append(nodo.dato())
+            if not nodo.si().es_vacio():
+                actual.append(nodo.si())
+            if not nodo.sd().es_vacio():
+                actual.append(nodo.sd())
+        return orden
+
     
     def nivel(self, dato: T) -> int:
         if self.es_vacio():
