@@ -23,10 +23,12 @@ class Grafo():
         if nodo in self.vertices:
             self.vertices.remove(nodo)
             for v in self.vertices:
-                self.eliminar_arista(nodo, v)            
+                self.eliminar_arista(nodo, v)
+        else:
+            ValueError('nodo no existe en el grafo')
     
     def es_vecino_de(self, nodo: T, otro_nodo: T) -> bool:
-        if (nodo, otro_nodo) in self.aristas or (otro_nodo, nodo) in self.aristas :
+        if ((nodo, otro_nodo) in self.aristas) or ((otro_nodo, nodo) in self.aristas):
             return True     
         return False
     
