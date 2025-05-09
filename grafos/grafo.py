@@ -8,10 +8,23 @@ class Grafo():
         self.aristas = aristas # Conjunto de aristas, que son pares de vértices
     
     def agregar_nodo(self, nodo: T)->None:
-        self.vertices.add(nodo)
+        if nodo not in self.vertices:
+            self.vertices.add(nodo)
+        else:
+            raise ValueError(f"El nodo {nodo} ya existe")
     
     def agregar_arista(self, origen: T, destino: T)->None:
-        self.aristas.add((origen,destino))
+        if origen not in self.vertices:
+            raise ValueError(f"El nodo {origen} no existe")
+        
+        elif destino not in self.vertices:
+            raise ValueError(f"El nodo {destino} no existe")
+        if (origen,destino) not in self.aristas:
+            self.aristas.add((origen,destino))
+                
+        else:
+            raise ValueError(f"La arista {arista} ya existe")
+        
     
     def eliminar_arista(self, origen: T, destino: T) -> None:
         if (origen, destino) in self.aristas:
@@ -29,11 +42,21 @@ class Grafo():
     
     def es_vecino_de(self, nodo: T, otro_nodo: T) -> bool:
         if ((nodo, otro_nodo) in self.aristas) or ((otro_nodo, nodo) in self.aristas):
-            return True     
-        return False
+            return True
+        elif nodo not in self.vertices:
+            raise ValueError(f"El nodo {nodo} no existe")
+        
+        elif otro_nodo not in self.vertices:
+            raise ValueError(f"El nodo {otro_nodo} no existe")
+        
+        else:
+            return False
     
     def vecinos_de(self, nodo: T) -> set[T]:
-        vecinos = set()
+        vecinos: set[T] = set()
+        if nodo not in self.vertices:
+            raise ValueError(f"El nodo {nodo} no existe")
+        
         for arista in self.aristas:
             if nodo in arista:
                 for a in arista:
@@ -50,13 +73,15 @@ def main():
     migrafo.agregar_arista(1,2)
     migrafo.agregar_arista(1,3)
     migrafo.agregar_arista(2,4)
+    print("vecinos de 1", migrafo.vecinos_de(1))
     print(migrafo.vertices)
     print(migrafo.aristas)
     print("Es vecino 2 de 3",migrafo.es_vecino_de(2,3))
-    print("Es vecino 4 de 1",migrafo.es_vecino_de(4,1))
+    print("Es vecino 4 de 2",migrafo.es_vecino_de(4,2))
     migrafo.eliminar_nodo(2)
     print(migrafo.vertices)
     print(migrafo.aristas)
+    
     
 #      1
 #     / \

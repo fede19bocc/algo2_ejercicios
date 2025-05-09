@@ -17,10 +17,10 @@ class GrafoAdy():
             self.lista_adyacencia[nodo] = set()
         
     def agregar_arista(self, origen: T, destino: T):
-        if origen in self.lista_adyacencia.keys():
+        if origen in self.lista_adyacencia.keys() and destino in self.lista_adyacencia.keys():
             self.lista_adyacencia[origen].add(destino)
         else:
-            raise ValueError(f'{origen} no es un nodo del grafo')
+            raise ValueError(f'{origen} o {destino} no son nodos del grafo')
             
     def eliminar_arista(self, origen: T, destino: T):
         if (self.es_nodo(origen)) and (destino in self.lista_adyacencia[origen]):
@@ -32,8 +32,8 @@ class GrafoAdy():
             
     def eliminar_nodo(self, nodo: T):
         if self.es_nodo(nodo):
-            del self.lista_adyacencia[nodo]
-            for llave in self.lista_adyacencia.keys():
+            del self.lista_adyacencia[nodo] # elimino el nodo
+            for llave in self.lista_adyacencia.keys(): # recorro las aristas y elimino de la lista de adyacencia
                 if nodo in self.lista_adyacencia[llave]:
                     self.lista_adyacencia[llave].remove(nodo)
         else:
@@ -63,10 +63,10 @@ def main():
     print("Es vecino 4 de 1",migrafo.es_vecino_de(4,1))
     # print("elimino arista (4,2)")
     # migrafo.eliminar_arista(4,2)
-    print("elimino nodo 5")
-    migrafo.eliminar_nodo(5)
+    # print("elimino nodo 5")
+    # migrafo.eliminar_nodo(5)
     print(migrafo.lista_adyacencia)
-    print(migrafo.nodos())
+    print(migrafo.lista_adyacencia.keys())
     print("es nodo 5: ", migrafo.es_nodo(5))
     
     

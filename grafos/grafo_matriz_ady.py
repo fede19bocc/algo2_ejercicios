@@ -27,33 +27,49 @@ class GrafoMatrizAdy():
             raise ValueError(f'{nodo1} y/o {nodo2} no estan en el grafo')
     
     def eliminar_nodo(self, nodo: T):
-        indice = self.nodos.index(nodo)
-        self.nodos.remove(nodo)
-        for i in range(len(self.matriz_adyacencia)):
-            self.matriz_adyacencia[i].pop(indice) 
-        self.matriz_adyacencia.pop(indice)
+        if nodo in self.nodos:
+            indice = self.nodos.index(nodo)
+            self.nodos.remove(nodo)
+            for i in range(len(self.matriz_adyacencia)):
+                self.matriz_adyacencia[i].pop(indice) 
+            self.matriz_adyacencia.pop(indice)
         
     def eliminar_arista(self, nodo1: T, nodo2: T):
-        indice_nodo1 = self.nodos.index(nodo1)
-        indice_nodo2 = self.nodos.index(nodo2)
+        if nodo1 in self.nodos:
+            indice_nodo1 = self.nodos.index(nodo1)
+        else:
+            raise ValueError(f'{nodo1} no existe en el grafo')
+        if nodo2 in self.nodos:
+            indice_nodo2 = self.nodos.index(nodo2)
+        else:
+            raise ValueError(f'{nodo2} no existe en el grafo')
         self.matriz_adyacencia[indice_nodo1][indice_nodo2] = 0
         self.matriz_adyacencia[indice_nodo2][indice_nodo1] = 0
         
     def es_vecino_de(self, nodo1: T, nodo2: T) -> bool:
-        indice_nodo1 = self.nodos.index(nodo1)
-        indice_nodo2 = self.nodos.index(nodo2)
+        if nodo1 in self.nodos:
+            indice_nodo1 = self.nodos.index(nodo1)
+        else:
+            raise ValueError(f'{nodo1} no existe en el grafo')
+        if nodo2 in self.nodos:
+            indice_nodo2 = self.nodos.index(nodo2)
+        else:
+            raise ValueError(f'{nodo2} no existe en el grafo')
         arista = self.matriz_adyacencia[indice_nodo1][indice_nodo2]
         return arista == 1
     
     def vecinos_de(self, nodo: T)->list[T]:
-        vecinos = []
-        indice = self.nodos.index(nodo)
-        pos_nodo = 0
-        for i in self.matriz_adyacencia[indice]:
-            if i == 1:
-                vecinos.append(self.nodos[pos_nodo])
-            pos_nodo += 1
-        return vecinos
+        if nodo in self.nodos:
+            vecinos = []
+            indice = self.nodos.index(nodo)
+            pos_nodo = 0
+            for i in self.matriz_adyacencia[indice]:
+                if i == 1:
+                    vecinos.append(self.nodos[pos_nodo])
+                pos_nodo += 1
+            return vecinos
+        else:
+            raise ValueError(f'{nodo} no existe en el grafo')
     
 def main():
     migrafo = GrafoMatrizAdy()
