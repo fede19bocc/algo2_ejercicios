@@ -38,7 +38,7 @@ class Grafo():
             for v in self.vertices:
                 self.eliminar_arista(nodo, v)
         else:
-            ValueError('nodo no existe en el grafo')
+            raise ValueError('nodo no existe en el grafo')
     
     def es_vecino_de(self, nodo: T, otro_nodo: T) -> bool:
         if ((nodo, otro_nodo) in self.aristas) or ((otro_nodo, nodo) in self.aristas):
@@ -64,6 +64,22 @@ class Grafo():
                         vecinos.add(a)
         return vecinos
     
+    def dfs(self) -> list[T]:
+        recorrido = []
+
+        def dfs_interna(nodo: T):
+            if nodo not in recorrido:
+                recorrido.append(nodo)
+                for vecino in self.vecinos_de(nodo):
+                    dfs_interna(vecino)
+
+        if not self.vertices:
+            return [] # si no tiene nodos
+
+        nodo_inicial = list(self.vertices)[0]
+        dfs_interna(nodo_inicial)
+        return recorrido
+
 def main():
     migrafo = Grafo()
     migrafo.agregar_nodo(1)
@@ -73,6 +89,7 @@ def main():
     migrafo.agregar_arista(1,2)
     migrafo.agregar_arista(1,3)
     migrafo.agregar_arista(2,4)
+    print("recorrido DFS", migrafo.dfs())
     print("vecinos de 1", migrafo.vecinos_de(1))
     print(migrafo.vertices)
     print(migrafo.aristas)
